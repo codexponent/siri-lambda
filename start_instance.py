@@ -8,7 +8,7 @@ ec2 = boto3.client('ec2', region_name='us-east-1')
 config = configparser.ConfigParser()
 config.read('credentials.ini')
 
-instance_id = config['CREDENTIALS']['instance_id']
+instance_id = config['CREDENTIALS']['instance-id']
 
 def handler(event, context):
     ec2.start_instances(InstanceIds=[instance_id])
@@ -25,5 +25,5 @@ def handler(event, context):
     #     'body': json.dumps(ip)
     # }
 
-# if __name__=="__main__":
-#     lambda_handler()
+if __name__=="__main__":
+    handler()
