@@ -40,4 +40,4 @@ stages:
         regionName: 'us-east-1'
         imageSource: 'imagename'
         sourceImageName: '$(dockerhubrepositoryname)/siri-lambda:$(tag)'
-        repositoryName: 'siri-lambda'
+        repositoryName: '$(ec2-repo-name)/siri-lambda:$(tag)'
