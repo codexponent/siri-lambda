@@ -39,5 +39,8 @@ stages:
         awsCredentials: 'AWS Codexponent'
         regionName: 'us-east-1'
         imageSource: 'imagename'
-        sourceImageName: '$(dockerhubrepositoryname)/siri-lambda:$(tag)'
-        repositoryName: '$(ec2-repo-name)/siri-lambda:$(tag)'
+        sourceImageName: '$(dockerhubrepositoryname)/siri-lambda'
+        sourceImageTag: '$(tag)'
+        repositoryName: 'siri-lambda'
+        pushTag: '$(tag)'
+          
