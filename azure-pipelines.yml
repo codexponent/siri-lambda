@@ -26,24 +26,24 @@ stages:
     #   inputs:
     #     containerRegistry: 'DockerHub Codexponent'
     #     command: 'login'
-    # - task: Docker@2
-    #   displayName: Build and Push Start Instance to DockerHub
-    #   inputs:
-    #     containerRegistry: 'DockerHub Codexponent'
-    #     repository: '$(dockerhubrepositoryname)/siri-lambda-start'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfiles/start_instance/Dockerfile'
-    #     buildContext: $(Build.SourcesDirectory)
-    #     tags: $(tag)
-    # - task: Docker@2
-    #   displayName: Build and Push Stop Instance to DockerHub
-    #   inputs:
-    #     containerRegistry: 'DockerHub Codexponent'
-    #     repository: '$(dockerhubrepositoryname)/siri-lambda-stop'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfiles/stop_instance/Dockerfile'
-    #     buildContext: $(Build.SourcesDirectory)
-    #     tags: $(tag)
+    - task: Docker@2
+      displayName: Build and Push Start Instance to DockerHub
+      inputs:
+        containerRegistry: 'DockerHub Codexponent'
+        repository: '$(dockerhubrepositoryname)/siri-lambda-start'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfiles/start_instance/Dockerfile'
+        buildContext: $(Build.SourcesDirectory)
+        tags: $(tag)
+    - task: Docker@2
+      displayName: Build and Push Stop Instance to DockerHub
+      inputs:
+        containerRegistry: 'DockerHub Codexponent'
+        repository: '$(dockerhubrepositoryname)/siri-lambda-stop'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfiles/stop_instance/Dockerfile'
+        buildContext: $(Build.SourcesDirectory)
+        tags: $(tag)
     - task: ECRPushImage@1
       displayName: Push Start Instance to AWS ECR
       inputs:
