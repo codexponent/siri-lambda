@@ -27,3 +27,11 @@ stages:
         repository: 'sulabh4/siri-lambda'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+    
+    - task: ECRPushImage@1
+      inputs:
+        awsCredentials: 'AWS Codexponent'
+        regionName: 'us-east-1'
+        imageSource: 'imagename'
+        sourceImageName: 'siri-lambda'
+        repositoryName: 'siri-lambda'
