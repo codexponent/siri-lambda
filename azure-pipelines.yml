@@ -33,7 +33,7 @@ stages:
         repository: '$(dockerhubrepositoryname)/siri-lambda-start'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfiles/start_instance/Dockerfile'
-        buildContext: '**'
+        buildContext: $(Build.SourcesDirectory)
         tags: $(tag)
     - task: Docker@2
       displayName: Build and Push Stop Instance to DockerHub
@@ -42,7 +42,7 @@ stages:
         repository: '$(dockerhubrepositoryname)/siri-lambda-stop'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfiles/stop_instance/Dockerfile'
-        buildContext: '**'
+        buildContext: $(Build.SourcesDirectory)
         tags: $(tag)
     - task: ECRPushImage@1
       displayName: Push Start Instance to AWS ECR
