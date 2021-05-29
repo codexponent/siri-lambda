@@ -24,6 +24,6 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub Codexponent'
-        repository: 'siri-lambda'
+        repository: 'sualbh4/siri-lambda'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
