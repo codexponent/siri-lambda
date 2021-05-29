@@ -23,10 +23,12 @@ stages:
     steps:
     - task: Docker@2
       inputs:
+        displayName: LogIn to DockerHub
         containerRegistry: 'DockerHub Codexponent'
         command: 'login'
     - task: Docker@2
       inputs:
+        displayName: Build and Push to DockerHub
         containerRegistry: 'DockerHub Codexponent'
         repository: '$(dockerhubrepositoryname)/siri-lambda'
         command: 'buildAndPush'
@@ -36,6 +38,7 @@ stages:
     
     - task: ECRPushImage@1
       inputs:
+        displayName: Push to AWS ECR
         awsCredentials: 'AWS Codexponent'
         regionName: 'us-east-1'
         imageSource: 'imagename'
@@ -44,3 +47,11 @@ stages:
         repositoryName: 'siri-lambda'
         pushTag: '$(tag)'
           
+    - task: AWSCLI@1
+      inputs:
+        displayName: Push to Lambda Function
+        awsCredentials: 'AWS Codexponent'
+        regionName: 'us-east-1'
+        awsCommand: 'lambda'
+        awsSubCommand: 'update-function-code'
+        awsArguments: '--function-name start_instance_docker --image-uri $(ec2-repo-name)/siri-lambda:$(tag)'
