@@ -54,4 +54,4 @@ stages:
         regionName: 'us-east-1'
         awsCommand: 'lambda'
         awsSubCommand: 'update-function-code'
-        awsArguments: '--function-name start_instance_docker --image-uri $(ec2-repo-name)/siri-lambda:$(tag)'
+        awsArguments: '--function-name siri-lambda-start --image-uri $(ec2-repo-name)/siri-lambda:$(tag)'
