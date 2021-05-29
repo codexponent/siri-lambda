@@ -21,6 +21,15 @@ stages:
     displayName: Build
     pool: Default
     steps:
+    - task: Bash@3
+      displayName: Create Credentials
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          echo '[CREDENTIALS]
+          instance-id = $(instance-id)' > credentials.ini
     - task: Docker@2
       displayName: LogIn to DockerHub
       inputs:
@@ -34,8 +43,6 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
-
-    
     - task: ECRPushImage@1
       displayName: Push to AWS ECR
       inputs:
@@ -46,7 +53,6 @@ stages:
         sourceImageTag: '$(tag)'
         repositoryName: 'siri-lambda'
         pushTag: '$(tag)'
-          
     - task: AWSCLI@1
       displayName: Push to Lambda Function
       inputs:
