@@ -18,9 +18,19 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'DockerHub Codexponent'
-    repository: 'siri-lambda'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+stages:
+- stage: Build
+  displayName: Build and Push Docker Images
+  jobs:
+  - job: Build
+    variables:
+    - group: server-pipeline-variable
+    displayName: Build
+    pool: Default
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerHub Codexponent'
+        repository: 'siri-lambda'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
