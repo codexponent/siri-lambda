@@ -32,7 +32,7 @@ stages:
         containerRegistry: 'DockerHub Codexponent'
         repository: '$(dockerhubrepositoryname)/siri-lambda'
         command: 'buildAndPush'
-        Dockerfile: '**/'
+        Dockerfile: '**/Dockerfile'
         # buildContext: $(Build.SourcesDirectory)
         tags: $(tag)
     # - task: Docker@2
