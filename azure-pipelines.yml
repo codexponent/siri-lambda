@@ -20,6 +20,11 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'DockerHub Codexponent'
+        command: 'login'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerHub Codexponent'
         repository: 'siri-lambda'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+        
