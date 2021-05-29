@@ -27,5 +27,3 @@ stages:
         repository: 'siri-lambda'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: |
-          late
