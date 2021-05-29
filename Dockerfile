@@ -7,7 +7,8 @@ RUN pip3 install boto3==1.17.79
 
 # # Copying the Python Script
 COPY start_instance.py /var/task
+COPY stop_instance.py /var/task
 
 # # Running the Python Script
-CMD ["start_instance.handler"]
+# CMD ["stop_instance.handler"]
 
