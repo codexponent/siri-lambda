@@ -25,5 +25,5 @@ def handler(event, context):
     #     'body': json.dumps(ip)
     # }
 
-if __name__=="__main__":
-    handler()
+# if __name__=="__main__":
+#     handler()
