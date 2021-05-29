@@ -21,43 +21,62 @@ stages:
     displayName: Build
     pool: Default
     steps:
-    - task: Bash@3
-      displayName: Create Credentials
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          
-          echo '[CREDENTIALS]
-          instance-id = $(instance-id)' > credentials.ini
     - task: Docker@2
       displayName: LogIn to DockerHub
       inputs:
         containerRegistry: 'DockerHub Codexponent'
         command: 'login'
     - task: Docker@2
-      displayName: Build and Push to DockerHub
+      displayName: Build and Push Start Instance to DockerHub
       inputs:
         containerRegistry: 'DockerHub Codexponent'
-        repository: '$(dockerhubrepositoryname)/siri-lambda'
+        repository: '$(dockerhubrepositoryname)/siri-lambda-start'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '**/Dockerfiles/start_instance/Dockerfile'
+        buildContext: '**'
+        tags: $(tag)
+    - task: Docker@2
+      displayName: Build and Push Stop Instance to DockerHub
+      inputs:
+        containerRegistry: 'DockerHub Codexponent'
+        repository: '$(dockerhubrepositoryname)/siri-lambda-stop'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfiles/stop_instance/Dockerfile'
+        buildContext: '**'
         tags: $(tag)
     - task: ECRPushImage@1
-      displayName: Push to AWS ECR
+      displayName: Push Start Instance to AWS ECR
       inputs:
         awsCredentials: 'AWS Codexponent'
         regionName: 'us-east-1'
         imageSource: 'imagename'
-        sourceImageName: '$(dockerhubrepositoryname)/siri-lambda'
+        sourceImageName: '$(dockerhubrepositoryname)/siri-lambda-start'
         sourceImageTag: '$(tag)'
-        repositoryName: 'siri-lambda'
+        repositoryName: 'siri-lambda-start'
+        pushTag: '$(tag)'
+    - task: ECRPushImage@1
+      displayName: Push Stop Instance to AWS ECR
+      inputs:
+        awsCredentials: 'AWS Codexponent'
+        regionName: 'us-east-1'
+        imageSource: 'imagename'
+        sourceImageName: '$(dockerhubrepositoryname)/siri-lambda-stop'
+        sourceImageTag: '$(tag)'
+        repositoryName: 'siri-lambda-stop'
         pushTag: '$(tag)'
     - task: AWSCLI@1
-      displayName: Push to Lambda Function
+      displayName: Push to Start Lambda Function
       inputs:
         awsCredentials: 'AWS Codexponent'
         regionName: 'us-east-1'
         awsCommand: 'lambda'
         awsSubCommand: 'update-function-code'
-        awsArguments: '--function-name siri-lambda-start --image-uri $(ec2-repo-name)/siri-lambda:$(tag)'
+        awsArguments: '--function-name siri-lambda-start --image-uri $(ec2-repo-name)/siri-lambda-start:$(tag)'
+    - task: AWSCLI@1
+      displayName: Push to Stop Lambda Function
+      inputs:
+        awsCredentials: 'AWS Codexponent'
+        regionName: 'us-east-1'
+        awsCommand: 'lambda'
+        awsSubCommand: 'update-function-code'
+        awsArguments: '--function-name siri-lambda-stop --image-uri $(ec2-repo-name)/siri-lambda-stop:$(tag)'
