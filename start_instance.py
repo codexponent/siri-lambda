@@ -1,6 +1,7 @@
 # # Libraries
 import os
 import time
+import json
 import boto3
 import logging
 
@@ -19,4 +20,8 @@ def handler(event, context):
             # print(instance.get("PublicIpAddress"))
             logging.info(instance.get("PublicIpAddress"))
             ip = instance.get("PublicIpAddress")
-    return str(ip)
+    # return str(ip)
+    return {
+        'statusCode': 200,
+        'body': json.dumps(ip)
+    }
