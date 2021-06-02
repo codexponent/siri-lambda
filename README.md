@@ -14,6 +14,13 @@ Connecting Siri with AWS Lambda to turn on/off the VM's
 <p align="center">
 <img align="center" alt="Photo" src="./architecture.png" />
 </p>
+<br />
+
+# Workflow
+<p align="center">
+<img align="center" alt="Photo" src="./workflow.png" />
+</p>
+<br />
 
 # Motivation
 This project is created to turn on the AWS EC2 Machines from your voice assistance (Siri). For this project I have used AWS Lambda function to invoke the start/stop function for the Instances, triggered by the API Gateway which is called through Siri. I am also using Docker images  rather than the script to put in into the serverless architrecture and using DockerHub as the Registry for public and ECR for Lambda to get the docker images directly. I also have implemented AzureDevOps in this project to make it easier to change the function through the code push into the GitHub. The instances are created using Pulumi (Iac).
